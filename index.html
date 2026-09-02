@@ -11,7 +11,8 @@
             font-family: sans-serif;
             background-color: var(--tg-theme-bg-color, #f4f4f9);
             color: var(--tg-theme-text-color, #333);
-            padding: 20px;
+            padding: 15px;
+            margin: 0;
         }
         .container {
             max-width: 400px;
@@ -21,19 +22,19 @@
             border-radius: 12px;
             box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
-        h2 { text-align: center; color: #ff6b81; }
-        .form-group { margin-bottom: 15px; }
-        label { display: block; margin-bottom: 5px; font-weight: bold; }
+        h2 { text-align: center; color: #ff6b81; margin-top: 0; }
+        .form-group { margin-bottom: 12px; }
+        label { display: block; margin-bottom: 4px; font-weight: bold; font-size: 14px; }
         input, select {
             width: 100%; padding: 10px; border-radius: 6px;
-            border: 1px solid #ccc; box-sizing: border-box;
+            border: 1px solid #ccc; box-sizing: border-box; font-size: 14px;
         }
         button {
             width: 100%; padding: 12px;
             background-color: var(--tg-theme-button-color, #ff4757);
             color: var(--tg-theme-button-text-color, #fff);
             border: none; border-radius: 6px; cursor: pointer;
-            font-weight: bold;
+            font-weight: bold; font-size: 16px; margin-top: 5px;
         }
     </style>
 </head>
@@ -42,12 +43,40 @@
         <h2>Catat Jajan Dulu Beb! 💸</h2>
         
         <div class="form-group">
-            <label>Beli Apa Tadi?</label>
-            <input type="text" id="aktivitas" placeholder="Cth: Ayam Geprek">
+            <label>Aktivitas (Beli Apa Tadi?)</label>
+            <input type="text" id="aktivitas" placeholder="Cth: Ayam Geprek + Es Teh">
         </div>
+
         <div class="form-group">
-            <label>Habis Berapa? (Rp)</label>
+            <label>Jenis Transaksi</label>
+            <select id="jenis">
+                <option value="Pengeluaran">Pengeluaran 🔴</option>
+                <option value="Pemasukan">Pemasukan 🟢</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Kategori</label>
+            <select id="kategori">
+                <option value="Makanan">Makanan</option>
+                <option value="Makanan Dan Lainnya">Makanan Dan Lainnya</option>
+                <option value="Lainnya">Lainnya (Rokok/Kopi/Dll)</option>
+                <option value="Tabungan/Investasi">Tabungan/Investasi</option>
+                <option value="Gaji/Uang Masuk">Gaji/Uang Masuk</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Jumlah (Rp)</label>
             <input type="number" id="jumlah" placeholder="Cth: 15000">
+        </div>
+
+        <div class="form-group">
+            <label>Metode Pembayaran</label>
+            <select id="metode">
+                <option value="Cash">Cash 💵</option>
+                <option value="Transfer">Transfer 💳</option>
+            </select>
         </div>
         
         <button type="button" onclick="kirimData()">Lapor ke Linda! 😘</button>
@@ -59,34 +88,35 @@
 
         function kirimData() {
             let aktivitas = document.getElementById("aktivitas").value.trim();
+            let jenis = document.getElementById("jenis").value;
+            let kategori = document.getElementById("kategori").value;
             let jumlah = document.getElementById("jumlah").value.trim();
+            let metode = document.getElementById("metode").value;
 
             if (!aktivitas || !jumlah) {
-                tg.showAlert("Isi yang lengkap dong sayang! 😤");
+                tg.showAlert("Isi aktivitas sama jumlahnya yang lengkap dong sayang! 😤");
                 return;
             }
 
-            // Karena kita pakai Google Apps Script sebagai endpoint POST, 
-            // kita bisa langsung fetch ke URL Apps Script kamu atau pakai tg.sendData jika lewat bot.
-            // Tapi biar langsung nyatet ke Google Sheet, kita tembak pakai fetch ke URL Apps Script kamu ya, beb!
-            
+            // Alamat Web App URL Google Script kamu yang udah kita deploy
             let urlWebApp = "https://script.google.com/macros/s/AKfycbyBuKfyWeFUDeJRAgNILbyoa6woY37oE_dkFFyk1fiWBXKtqt3DEzmlUzRu_Rko8MVA/exec";
 
             let dataPayload = {
                 aktivitas: aktivitas,
+                jenis: jenis,
+                kategori: kategori,
                 jumlah: Number(jumlah),
-                kategori: "Makanan Dan Lainnya",
-                metode: "Cash"
+                metode: metode
             };
 
-            // Berikan efek loading / disable tombol biar gak dipencet mulu
             let btn = document.querySelector("button");
             btn.innerText = "Lagi dicatet ya beb... ⏳";
             btn.disabled = true;
 
+            // Kirim pakai fetch ke Google Apps Script
             fetch(urlWebApp, {
                 method: "POST",
-                mode: "no-cors", // Penting buat bypass CORS Google Apps Script
+                mode: "no-cors",
                 headers: {
                     "Content-Type": "application/json"
                 },
@@ -94,7 +124,7 @@
             })
             .then(response => {
                 tg.showAlert("Yeay! Berhasil dicatat sama Linda! 😘✨");
-                tg.close(); // Otomatis tutup web app setelah sukses
+                tg.close(); // Otomatis nutup web app-nya setelah sukses!
             })
             .catch(error => {
                 console.error("Error:", error);
