@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Linda - Catat Jajan Sayangku</title>
-    <!-- Script WAJIB buat Telegram Web App -->
+    <!-- Script WAJIB Telegram Web App -->
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         :root {
@@ -17,7 +17,6 @@
             --btn-text: #fff;
         }
 
-        /* Mode Malam / Dark Mode Otomatis ngikutin Telegram */
         @media (prefers-color-scheme: dark) {
             :root {
                 --bg-color: #18191a;
@@ -48,7 +47,6 @@
         }
         h2 { text-align: center; color: #ff6b81; margin-top: 0; font-size: 22px; }
         
-        /* Kotak Info Saldo Realtime */
         .saldo-box {
             background: linear-gradient(135deg, #ff6b81, #ff4757);
             color: #fff;
@@ -89,7 +87,6 @@
     <div class="container">
         <h2>Catat Jajan Dulu Beb! 💸</h2>
 
-        <!-- Tampilan Total Saldo Realtime -->
         <div class="saldo-box">
             <h4>Sisa Uang Belanja Kamu</h4>
             <p id="totalSaldo">Memuat saldo...</p>
@@ -135,87 +132,89 @@
         <button type="button" onclick="kirimData()">Lapor ke Linda! 😘</button>
     </div>
 
-<script>
-    let tg = window.Telegram.WebApp;
-    tg.expand();
+    <script>
+        let tg = window.Telegram.WebApp;
+        tg.expand();
 
-    // Ganti URL ini dengan URL Web App Apps Script milikmu yang BARU setelah Deploy ulang
-    let urlWebApp = "https://script.google.com/macros/s/AKfycbxMb6lUKFjlm28LbwD3Tn5y6crLBnBkG9escSZX_euYg4Mbl5athwP1uomxDkd5CAAQ/exec;
+        let urlWebApp = "https://script.google.com/macros/s/AKfycbxMb6lUKFjlm28LbwD3Tn5y6crLBnBkG9escSZX_euYg4Mbl5athwP1uomxDkd5CAAQ/exec";
 
-    // Ambil data saldo realtime
-    function muatSaldo() {
-        fetch(urlWebApp)
-        .then(response => response.json())
-        .then(data => {
-            if (data.status === "success") {
-                let formattedSaldo = new Intl.NumberFormat('id-ID', { 
-                    style: 'currency', 
-                    currency: 'IDR', 
-                    maximumFractionDigits: 0 
-                }).format(data.sisaSaldo);
-                document.getElementById("totalSaldo").innerText = formattedSaldo;
-            } else {
-                document.getElementById("totalSaldo").innerText = "Gagal memuat";
-            }
-        })
-        .catch(error => {
-            console.error("Error load saldo:", error);
-            document.getElementById("totalSaldo").innerText = "Error";
-        });
-    }
-
-    muatSaldo();
-
-    function kirimData() {
-        let aktivitas = document.getElementById("aktivitas").value.trim();
-        let jenis = document.getElementById("jenis").value;
-        let kategori = document.getElementById("kategori").value;
-        let jumlah = document.getElementById("jumlah").value.trim();
-        let metode = document.getElementById("metode").value;
-
-        if (!aktivitas || !jumlah) {
-            tg.showAlert("Isi aktivitas sama jumlahnya yang lengkap dong sayang! 😤");
-            return;
+        function muatSaldo() {
+            document.getElementById("totalSaldo").innerText = "Memuat saldo...";
+            
+            fetch(urlWebApp, {
+                method: "GET",
+                redirect: "follow"
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === "success") {
+                    let formattedSaldo = new Intl.NumberFormat('id-ID', { 
+                        style: 'currency', 
+                        currency: 'IDR', 
+                        maximumFractionDigits: 0 
+                    }).format(data.sisaSaldo);
+                    document.getElementById("totalSaldo").innerText = formattedSaldo;
+                } else {
+                    document.getElementById("totalSaldo").innerText = "Gagal memuat";
+                }
+            })
+            .catch(error => {
+                console.error("Error load saldo:", error);
+                document.getElementById("totalSaldo").innerText = "Gagal terhubung";
+            });
         }
 
-        let btn = document.querySelector("button");
-        btn.innerText = "Lagi dimasukin Linda ya beb... ⏳";
-        btn.disabled = true;
+        muatSaldo();
 
-        // Menggunakan text/plain untuk bypass CORS preflight di Google Apps Script
-        fetch(urlWebApp, {
-            method: "POST",
-            headers: {
-                "Content-Type": "text/plain;charset=utf-8"
-            },
-            body: JSON.stringify({
-                aktivitas: aktivitas,
-                jenis: jenis,
-                kategori: kategori,
-                jumlah: Number(jumlah),
-                metode: metode
-            })
-        })
-        .then(response => response.json())
-        .then(res => {
-            if (res.status === "success") {
-                tg.showAlert("Yey! Laporan sudah selesai Linda masukkan ke Spreadsheet ya, sayang! 😘✨");
-                document.getElementById("aktivitas").value = "";
-                document.getElementById("jumlah").value = "";
-                muatSaldo();
-            } else {
-                tg.showAlert("Gagal menyimpan: " + res.message);
+        function kirimData() {
+            let aktivitas = document.getElementById("aktivitas").value.trim();
+            let jenis = document.getElementById("jenis").value;
+            let kategori = document.getElementById("kategori").value;
+            let jumlah = document.getElementById("jumlah").value.trim();
+            let metode = document.getElementById("metode").value;
+
+            if (!aktivitas || !jumlah) {
+                tg.showAlert("Isi aktivitas sama jumlahnya yang lengkap dong sayang! 😤");
+                return;
             }
-        })
-        .catch(error => {
-            console.error("Error:", error);
-            tg.showAlert("Duh error sayang, coba lagi ya! 😩");
-        })
-        .finally(() => {
-            btn.innerText = "Lapor ke Linda! 😘";
-            btn.disabled = false;
-        });
-    }
-</script>
+
+            let btn = document.querySelector("button");
+            btn.innerText = "Lagi dimasukin Linda ya beb... ⏳";
+            btn.disabled = true;
+
+            fetch(urlWebApp, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "text/plain;charset=utf-8"
+                },
+                body: JSON.stringify({
+                    aktivitas: aktivitas,
+                    jenis: jenis,
+                    kategori: kategori,
+                    jumlah: Number(jumlah),
+                    metode: metode
+                })
+            })
+            .then(response => response.json())
+            .then(res => {
+                if (res.status === "success") {
+                    tg.showAlert("Yey! Laporan sudah selesai Linda masukkan ke Spreadsheet ya, sayang! 😘✨");
+                    document.getElementById("aktivitas").value = "";
+                    document.getElementById("jumlah").value = "";
+                    muatSaldo();
+                } else {
+                    tg.showAlert("Gagal: " + res.message);
+                }
+            })
+            .catch(error => {
+                console.error("Error:", error);
+                tg.showAlert("Duh error sayang, coba lagi ya! 😩");
+            })
+            .finally(() => {
+                btn.innerText = "Lapor ke Linda! 😘";
+                btn.disabled = false;
+            });
+        }
+    </script>
 </body>
 </html>
