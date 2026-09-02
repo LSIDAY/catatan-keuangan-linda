@@ -154,10 +154,16 @@
                 body: JSON.stringify(dataPayload)
             })
             .then(response => {
-                // Notifikasi sukses sesuai mau kamu
-                tg.showAlert("Yey! Laporan sudah selesai Linda masukkan ke Spreadsheet ya, sayang! 😘✨", function() {
-                    tg.close(); // Baru nutup setelah pop-up alert-nya di-klik OK sama kamu
-                });
+                // Notifikasi sukses muncul, tapi web app-nya TIDAK DI-CLOSE otomatis!
+                tg.showAlert("Yey! Laporan sudah selesai Linda masukkan ke Spreadsheet ya, sayang! 😘✨");
+                
+                // Kembalikan tombol ke semula biar bisa dipakai lagi kalau mau input data baru
+                btn.innerText = "Lapor ke Linda! 😘";
+                btn.disabled = false;
+                
+                // Kosongkan form input biar gampang kalau mau catat lagi
+                document.getElementById("aktivitas").value = "";
+                document.getElementById("jumlah").value = "";
             })
             .catch(error => {
                 console.error("Error:", error);
