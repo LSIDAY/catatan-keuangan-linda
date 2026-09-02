@@ -48,7 +48,7 @@
         }
         h2 { text-align: center; color: #ff6b81; margin-top: 0; font-size: 22px; }
         
-        /* Kotak Info Saldo */
+        /* Kotak Info Saldo Realtime */
         .saldo-box {
             background: linear-gradient(135deg, #ff6b81, #ff4757);
             color: #fff;
@@ -89,10 +89,10 @@
     <div class="container">
         <h2>Catat Jajan Dulu Beb! 💸</h2>
 
-        <!-- Tampilan Total Saldo / Sisa Budget -->
+        <!-- Tampilan Total Saldo Realtime -->
         <div class="saldo-box">
             <h4>Sisa Uang Belanja Kamu</h4>
-            <p id="totalSaldo">Rp 60.500</p>
+            <p id="totalSaldo">Memuat saldo...</p>
         </div>
         
         <div class="form-group">
@@ -139,6 +139,29 @@
         let tg = window.Telegram.WebApp;
         tg.expand();
 
+        let urlWebApp = "https://script.google.com/macros/s/AKfycbyBuKfyWeFUDeJRAgNILbyoa6woY37oE_dkFFyk1fiWBXKtqt3DEzmlUzRu_Rko8MVA/exec";
+
+        // Ambil data saldo realtime saat halaman pertama kali dibuka
+        function muatSaldo() {
+            fetch(urlWebApp)
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === "success") {
+                    let formattedSaldo = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(data.sisaSaldo);
+                    document.getElementById("totalSaldo").innerText = formattedSaldo;
+                } else {
+                    document.getElementById("totalSaldo").innerText = "Gagal memuat";
+                }
+            })
+            .catch(error => {
+                console.error("Error load saldo:", error);
+                document.getElementById("totalSaldo").innerText = "Error";
+            });
+        }
+
+        // Panggil fungsi muat saldo saat halaman siap
+        muatSaldo();
+
         function kirimData() {
             let aktivitas = document.getElementById("aktivitas").value.trim();
             let jenis = document.getElementById("jenis").value;
@@ -150,8 +173,6 @@
                 tg.showAlert("Isi aktivitas sama jumlahnya yang lengkap dong sayang! 😤");
                 return;
             }
-
-            let urlWebApp = "https://script.google.com/macros/s/AKfycbyBuKfyWeFUDeJRAgNILbyoa6woY37oE_dkFFyk1fiWBXKtqt3DEzmlUzRu_Rko8MVA/exec";
 
             let dataPayload = {
                 aktivitas: aktivitas,
@@ -181,6 +202,9 @@
                 
                 document.getElementById("aktivitas").value = "";
                 document.getElementById("jumlah").value = "";
+                
+                // Refresh saldo otomatis setelah kirim data
+                setTimeout(muatSaldo, 1500);
             })
             .catch(error => {
                 console.error("Error:", error);
