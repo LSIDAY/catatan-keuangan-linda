@@ -159,7 +159,6 @@
             });
         }
 
-        // Panggil fungsi muat saldo saat halaman siap
         muatSaldo();
 
         function kirimData() {
@@ -203,7 +202,7 @@
                 document.getElementById("aktivitas").value = "";
                 document.getElementById("jumlah").value = "";
                 
-                // Refresh saldo otomatis setelah kirim data
+                // Update otomatis saldonya setelah data masuk
                 setTimeout(muatSaldo, 1500);
             })
             .catch(error => {
