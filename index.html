@@ -17,7 +17,7 @@
             --btn-text: #fff;
         }
 
-        /* Mode Malam / Dark Mode Otomatis ngikutin Telegram atau Manual */
+        /* Mode Malam / Dark Mode Otomatis ngikutin Telegram */
         @media (prefers-color-scheme: dark) {
             :root {
                 --bg-color: #18191a;
@@ -142,7 +142,7 @@
             };
 
             let btn = document.querySelector("button");
-            btn.innerText = "Lagi dicatet ya beb... ⏳";
+            btn.innerText = "Lagi dimasukin Linda ya beb... ⏳";
             btn.disabled = true;
 
             fetch(urlWebApp, {
@@ -154,8 +154,10 @@
                 body: JSON.stringify(dataPayload)
             })
             .then(response => {
-                tg.showAlert("Yeay! Berhasil dicatat sama Linda! 😘✨");
-                tg.close();
+                // Notifikasi sukses sesuai mau kamu
+                tg.showAlert("Yey! Laporan sudah selesai Linda masukkan ke Spreadsheet ya, sayang! 😘✨", function() {
+                    tg.close(); // Baru nutup setelah pop-up alert-nya di-klik OK sama kamu
+                });
             })
             .catch(error => {
                 console.error("Error:", error);
