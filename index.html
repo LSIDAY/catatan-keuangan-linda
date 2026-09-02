@@ -84,7 +84,7 @@
 
     <script>
         let tg = window.Telegram.WebApp;
-        tg.expand(); // Bikin web app-nya full screen di Telegram
+        tg.expand();
 
         function kirimData() {
             let aktivitas = document.getElementById("aktivitas").value.trim();
@@ -98,7 +98,6 @@
                 return;
             }
 
-            // Alamat Web App URL Google Script kamu yang udah kita deploy
             let urlWebApp = "https://script.google.com/macros/s/AKfycbyBuKfyWeFUDeJRAgNILbyoa6woY37oE_dkFFyk1fiWBXKtqt3DEzmlUzRu_Rko8MVA/exec";
 
             let dataPayload = {
@@ -113,7 +112,6 @@
             btn.innerText = "Lagi dicatet ya beb... ⏳";
             btn.disabled = true;
 
-            // Kirim pakai fetch ke Google Apps Script
             fetch(urlWebApp, {
                 method: "POST",
                 mode: "no-cors",
@@ -124,7 +122,7 @@
             })
             .then(response => {
                 tg.showAlert("Yeay! Berhasil dicatat sama Linda! 😘✨");
-                tg.close(); // Otomatis nutup web app-nya setelah sukses!
+                tg.close();
             })
             .catch(error => {
                 console.error("Error:", error);
