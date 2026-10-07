@@ -113,7 +113,7 @@
             border-radius: 50%;
         }
 
-        /* Balance & Target Dashboard */
+        /* Dashboard Card */
         .dashboard-card {
             background: var(--surface-card);
             border: 1px solid var(--border-ui);
@@ -222,7 +222,7 @@
             gap: 16px;
         }
 
-        /* Segmented Control (Toggle Button) */
+        /* Segmented Control */
         .segmented-control {
             display: flex;
             background: var(--input-bg);
@@ -306,7 +306,6 @@
             box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
         }
 
-        /* Amount Field Currency Badge */
         .currency-prefix {
             position: absolute;
             left: 14px;
@@ -440,7 +439,6 @@
 
         <!-- Form Record Input -->
         <section class="form-card">
-            <!-- Toggle Pengeluaran / Pemasukan -->
             <div class="segmented-control">
                 <button type="button" class="segmented-btn active expense" id="btnExpense" onclick="setJenis('Pengeluaran')">
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m19 12-7 7-7-7M12 19V5"/></svg>
@@ -452,7 +450,6 @@
                 </button>
             </div>
 
-            <!-- Keterangan -->
             <div class="field-group">
                 <label class="field-label">Keterangan Transaksi</label>
                 <div class="input-wrapper">
@@ -463,7 +460,6 @@
                 </div>
             </div>
 
-            <!-- Kategori -->
             <div class="field-group">
                 <label class="field-label">Kategori</label>
                 <div class="input-wrapper">
@@ -480,7 +476,6 @@
                 </div>
             </div>
 
-            <!-- Nominal -->
             <div class="field-group">
                 <label class="field-label">Nominal Transaksi</label>
                 <div class="input-wrapper">
@@ -489,7 +484,6 @@
                 </div>
             </div>
 
-            <!-- Metode Pembayaran -->
             <div class="field-group">
                 <label class="field-label">Metode Pembayaran</label>
                 <div class="input-wrapper">
@@ -503,7 +497,6 @@
                 </div>
             </div>
 
-            <!-- Submit Button -->
             <button type="button" class="submit-btn" id="btnSubmit" onclick="kirimData()">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
                 <span>Simpan Transaksi</span>
@@ -511,13 +504,11 @@
         </section>
     </div>
 
-    <!-- Toast Notification -->
     <div id="toast" class="toast">Notifikasi</div>
 
     <script>
-        // Init Telegram WebApp
-        let tg = window.Telegram.WebApp;
-        tg.expand();
+        let tg = window.Telegram && window.Telegram.WebApp ? window.Telegram.WebApp : null;
+        if (tg) tg.expand();
 
         let urlWebApp = "https://script.google.com/macros/s/AKfycbyEyj9QZc8IMvRXZGnMgxw-dqk0Czqnxu52R2naO1Vv-VBZEJUWOloT4tMunD7a-BeM/exec";
         let selectedJenis = "Pengeluaran";
