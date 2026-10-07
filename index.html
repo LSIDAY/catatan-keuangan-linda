@@ -3,35 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Linda - Catat Jajan Sayangku</title>
+    <title>Linda App</title>
     <!-- Script WAJIB Telegram Web App -->
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         :root {
-            --bg-color: #f8f9fa;
+            --bg-color: #f4f6f8;
             --card-bg: #ffffff;
-            --text-main: #2d3436;
-            --text-muted: #636e72;
-            --input-bg: #f1f2f6;
-            --border-color: #dfe4ea;
-            --primary: #ff4757;
-            --primary-gradient: linear-gradient(135deg, #ff6b81, #ff4757);
-            --tabungan-gradient: linear-gradient(135deg, #2ed573, #1e90ff);
-            --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08);
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --input-bg: #f8fafc;
+            --border-color: #e2e8f0;
+            --primary: #4f46e5;
+            --primary-gradient: linear-gradient(135deg, #6366f1, #4f46e5);
+            --tabungan-gradient: linear-gradient(135deg, #10b981, #059669);
+            --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
         }
 
         @media (prefers-color-scheme: dark) {
             :root {
-                --bg-color: #121212;
-                --card-bg: #1e1e1e;
-                --text-main: #f5f6fa;
-                --text-muted: #a4b0be;
-                --input-bg: #2f3542;
-                --border-color: #353b48;
-                --primary: #ff6b81;
-                --primary-gradient: linear-gradient(135deg, #ff6b81, #ee5253);
-                --tabungan-gradient: linear-gradient(135deg, #2ed573, #00a8ff);
-                --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+                --bg-color: #0f172a;
+                --card-bg: #1e293b;
+                --text-main: #f8fafc;
+                --text-muted: #94a3b8;
+                --input-bg: #334155;
+                --border-color: #475569;
+                --primary: #818cf8;
+                --primary-gradient: linear-gradient(135deg, #6366f1, #4f46e5);
+                --tabungan-gradient: linear-gradient(135deg, #10b981, #059669);
+                --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
             }
         }
 
@@ -88,7 +88,7 @@
             border-radius: 16px;
             text-align: center;
             margin-bottom: 14px;
-            box-shadow: 0 8px 16px rgba(255, 71, 87, 0.25);
+            box-shadow: 0 8px 16px rgba(79, 70, 229, 0.2);
             position: relative;
             overflow: hidden;
         }
@@ -112,7 +112,7 @@
         /* Card Target Tabungan */
         .target-box {
             background: var(--input-bg);
-            border: 1.5px solid var(--border-color);
+            border: 1px solid var(--border-color);
             padding: 16px;
             border-radius: 16px;
             margin-bottom: 22px;
@@ -154,7 +154,7 @@
 
         .progress-bar-bg {
             width: 100%;
-            height: 10px;
+            height: 8px;
             background: var(--border-color);
             border-radius: 10px;
             overflow: hidden;
@@ -185,7 +185,7 @@
             width: 100%;
             padding: 12px 14px;
             border-radius: 12px;
-            border: 1.5px solid var(--border-color);
+            border: 1px solid var(--border-color);
             background-color: var(--input-bg);
             color: var(--text-main);
             font-size: 14px;
@@ -195,7 +195,7 @@
 
         input:focus, select:focus {
             border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(255, 107, 129, 0.15);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
         }
 
         /* Custom Input Nominal */
@@ -220,7 +220,7 @@
         /* Tombol Kirim */
         button {
             width: 100%;
-            padding: 15px;
+            padding: 14px;
             background: var(--primary-gradient);
             color: #ffffff;
             border: none;
@@ -229,7 +229,7 @@
             font-weight: 700;
             font-size: 15px;
             margin-top: 10px;
-            box-shadow: 0 6px 15px rgba(255, 71, 87, 0.3);
+            box-shadow: 0 6px 15px rgba(79, 70, 229, 0.25);
             transition: transform 0.1s ease, opacity 0.2s ease;
         }
 
@@ -248,20 +248,20 @@
 <body>
     <div class="container">
         <div class="header">
-            <h2>Catat Jajan Dulu Beb! 💸</h2>
-            <p>Masukkan transaksi kamu dengan rapi ya</p>
+            <h2>Linda App</h2>
+            <p>Catatan Keuangan & Tabungan</p>
         </div>
 
         <!-- Card Saldo Belanja -->
         <div class="saldo-box">
-            <h4>Sisa Uang Belanja Kamu</h4>
+            <h4>Saldo Utama</h4>
             <p id="totalSaldo">Memuat saldo...</p>
         </div>
 
         <!-- Card Target Tabungan -->
         <div class="target-box">
             <div class="target-header">
-                <span class="target-title" id="namaTarget">🎯 Target: Memuat...</span>
+                <span class="target-title" id="namaTarget">Target Tabungan</span>
                 <span class="target-badge" id="persenTarget">0%</span>
             </div>
             <div class="target-amounts">
@@ -274,31 +274,31 @@
         </div>
         
         <div class="form-group">
-            <label>Aktivitas (Beli Apa Tadi?)</label>
-            <input type="text" id="aktivitas" placeholder="Cth: Nabung Beli HP / Es Teh">
+            <label>Keterangan Transaksi</label>
+            <input type="text" id="aktivitas" placeholder="Cth: Beli Makan Siang / Setor Tabungan">
         </div>
 
         <div class="form-group">
             <label>Jenis Transaksi</label>
             <select id="jenis">
-                <option value="Pengeluaran">Pengeluaran 🔴</option>
-                <option value="Pemasukan">Pemasukan 🟢</option>
+                <option value="Pengeluaran">Pengeluaran</option>
+                <option value="Pemasukan">Pemasukan</option>
             </select>
         </div>
 
         <div class="form-group">
             <label>Kategori</label>
             <select id="kategori">
-                <option value="Makanan">Makanan 🍔</option>
-                <option value="Makanan Dan Lainnya">Makanan Dan Lainnya 🍲</option>
-                <option value="Lainnya">Lainnya (Rokok/Kopi/Dll) ☕</option>
-                <option value="Tabungan/Investasi">Tabungan/Investasi 💰</option>
-                <option value="Gaji/Uang Masuk">Gaji/Uang Masuk 💵</option>
+                <option value="Makanan">Makanan & Minuman</option>
+                <option value="Makanan Dan Lainnya">Kebutuhan Harian</option>
+                <option value="Lainnya">Lain-lain</option>
+                <option value="Tabungan/Investasi">Tabungan / Investasi</option>
+                <option value="Gaji/Uang Masuk">Pendapatan / Gaji</option>
             </select>
         </div>
 
         <div class="form-group">
-            <label>Jumlah</label>
+            <label>Nominal</label>
             <div class="input-group">
                 <span class="input-prefix">Rp</span>
                 <input type="number" id="jumlah" placeholder="0" inputmode="numeric">
@@ -308,12 +308,12 @@
         <div class="form-group">
             <label>Metode Pembayaran</label>
             <select id="metode">
-                <option value="Cash">Cash 💵</option>
-                <option value="Transfer">Transfer 💳</option>
+                <option value="Cash">Tunai (Cash)</option>
+                <option value="Transfer">Transfer / QRIS</option>
             </select>
         </div>
         
-        <button type="button" onclick="kirimData()">Lapor ke Linda! 😘</button>
+        <button type="button" onclick="kirimData()">Simpan Transaksi</button>
     </div>
 
     <script>
@@ -344,9 +344,9 @@
 
                     let totalTabungan = data.totalTabungan || 0;
                     let targetTabungan = data.targetTabungan || 0;
-                    let namaTarget = data.namaTarget || "Tabungan Impian 🎯";
+                    let namaTarget = data.namaTarget || "Target Tabungan";
 
-                    document.getElementById("namaTarget").innerText = "🎯 " + namaTarget;
+                    document.getElementById("namaTarget").innerText = namaTarget;
                     document.getElementById("totalTabungan").innerText = formatRupiah(totalTabungan);
                     document.getElementById("targetNominal").innerText = "/ " + formatRupiah(targetTabungan);
 
@@ -374,12 +374,12 @@
             let metode = document.getElementById("metode").value;
 
             if (!aktivitas || !jumlah) {
-                tg.showAlert("Isi aktivitas sama jumlahnya yang lengkap dong sayang! 😤");
+                tg.showAlert("Harap isi keterangan dan nominal transaksi dengan lengkap.");
                 return;
             }
 
             let btn = document.querySelector("button");
-            btn.innerText = "Lagi dimasukin Linda ya beb... ⏳";
+            btn.innerText = "Menyimpan...";
             btn.disabled = true;
 
             fetch(urlWebApp, {
@@ -398,7 +398,7 @@
             .then(response => response.json())
             .then(res => {
                 if (res.status === "success") {
-                    tg.showAlert("Yey! Laporan sudah selesai Linda masukkan ke Spreadsheet ya, sayang! 😘✨");
+                    tg.showAlert("Transaksi berhasil disimpan.");
                     document.getElementById("aktivitas").value = "";
                     document.getElementById("jumlah").value = "";
                     muatSaldo();
@@ -408,10 +408,10 @@
             })
             .catch(error => {
                 console.error("Error:", error);
-                tg.showAlert("Duh error sayang, coba lagi ya! 😩");
+                tg.showAlert("Terjadi kesalahan sistem, silakan coba lagi.");
             })
             .finally(() => {
-                btn.innerText = "Lapor ke Linda! 😘";
+                btn.innerText = "Simpan Transaksi";
                 btn.disabled = false;
             });
         }
