@@ -4,34 +4,44 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Linda App</title>
-    <!-- Script WAJIB Telegram Web App -->
+    <!-- Font Inter dari Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Telegram WebApp Script -->
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         :root {
-            --bg-color: #f4f6f8;
-            --card-bg: #ffffff;
-            --text-main: #1e293b;
-            --text-muted: #64748b;
-            --input-bg: #f8fafc;
-            --border-color: #e2e8f0;
-            --primary: #4f46e5;
-            --primary-gradient: linear-gradient(135deg, #6366f1, #4f46e5);
-            --tabungan-gradient: linear-gradient(135deg, #10b981, #059669);
-            --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+            --bg-page: #f8fafc;
+            --surface-card: #ffffff;
+            --text-title: #0f172a;
+            --text-body: #334155;
+            --text-subtle: #64748b;
+            --border-ui: #e2e8f0;
+            --input-bg: #f1f5f9;
+            --brand-primary: #4338ca;
+            --brand-primary-hover: #3730a3;
+            --accent-green: #10b981;
+            --accent-red: #ef4444;
+            --shadow-subtle: 0 1px 3px 0 rgba(0,0,0,0.05), 0 1px 2px -1px rgba(0,0,0,0.05);
+            --shadow-card: 0 10px 15px -3px rgba(15,23,42,0.04), 0 4px 6px -4px rgba(15,23,42,0.02);
+            --radius-lg: 16px;
+            --radius-md: 12px;
         }
 
         @media (prefers-color-scheme: dark) {
             :root {
-                --bg-color: #0f172a;
-                --card-bg: #1e293b;
-                --text-main: #f8fafc;
-                --text-muted: #94a3b8;
-                --input-bg: #334155;
-                --border-color: #475569;
-                --primary: #818cf8;
-                --primary-gradient: linear-gradient(135deg, #6366f1, #4f46e5);
-                --tabungan-gradient: linear-gradient(135deg, #10b981, #059669);
-                --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+                --bg-page: #0b0f17;
+                --surface-card: #161f2e;
+                --text-title: #f8fafc;
+                --text-body: #cbd5e1;
+                --text-subtle: #64748b;
+                --border-ui: #243144;
+                --input-bg: #1e293b;
+                --brand-primary: #6366f1;
+                --brand-primary-hover: #4f46e5;
+                --shadow-subtle: 0 1px 3px 0 rgba(0,0,0,0.2);
+                --shadow-card: 0 10px 15px -3px rgba(0,0,0,0.3);
             }
         }
 
@@ -41,83 +51,103 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            padding: 16px;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg-page);
+            color: var(--text-body);
             margin: 0;
+            padding: 16px;
             display: flex;
             justify-content: center;
-            align-items: center;
+            align-items: flex-start;
             min-height: 100vh;
         }
 
-        .container {
+        .app-shell {
             width: 100%;
-            max-width: 420px;
-            background: var(--card-bg);
-            padding: 24px 20px;
-            border-radius: 20px;
-            box-shadow: var(--shadow);
+            max-width: 440px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
         }
 
-        .header {
-            text-align: center;
-            margin-bottom: 20px;
+        /* Top Header */
+        .app-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 4px 0;
         }
 
-        .header h2 {
-            margin: 0;
-            font-size: 22px;
-            font-weight: 700;
-            color: var(--primary);
-            letter-spacing: -0.5px;
-        }
-
-        .header p {
-            margin: 4px 0 0 0;
-            font-size: 13px;
-            color: var(--text-muted);
-        }
-
-        /* Card Saldo */
-        .saldo-box {
-            background: var(--primary-gradient);
-            color: #ffffff;
-            padding: 18px;
-            border-radius: 16px;
-            text-align: center;
-            margin-bottom: 14px;
-            box-shadow: 0 8px 16px rgba(79, 70, 229, 0.2);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .saldo-box h4 {
-            margin: 0 0 6px 0;
-            font-size: 11px;
-            opacity: 0.9;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            font-weight: 600;
-        }
-
-        .saldo-box p {
-            margin: 0;
-            font-size: 24px;
+        .brand-info h1 {
+            font-size: 20px;
             font-weight: 800;
+            color: var(--text-title);
+            margin: 0;
             letter-spacing: -0.5px;
         }
 
-        /* Card Target Tabungan */
-        .target-box {
-            background: var(--input-bg);
-            border: 1px solid var(--border-color);
-            padding: 16px;
-            border-radius: 16px;
-            margin-bottom: 22px;
+        .brand-info p {
+            font-size: 12px;
+            color: var(--text-subtle);
+            margin: 2px 0 0 0;
+            font-weight: 500;
         }
 
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            background: var(--surface-card);
+            border: 1px solid var(--border-ui);
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text-subtle);
+        }
+
+        .status-dot {
+            width: 7px;
+            height: 7px;
+            background-color: var(--accent-green);
+            border-radius: 50%;
+        }
+
+        /* Balance & Target Dashboard */
+        .dashboard-card {
+            background: var(--surface-card);
+            border: 1px solid var(--border-ui);
+            border-radius: var(--radius-lg);
+            padding: 20px;
+            box-shadow: var(--shadow-card);
+        }
+
+        .main-balance-label {
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            color: var(--text-subtle);
+            margin-bottom: 4px;
+        }
+
+        .main-balance-value {
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--text-title);
+            letter-spacing: -0.8px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        .divider {
+            height: 1px;
+            background-color: var(--border-ui);
+            margin: 16px 0;
+        }
+
+        /* Target Savings Area */
         .target-header {
             display: flex;
             justify-content: space-between;
@@ -125,202 +155,404 @@
             margin-bottom: 8px;
         }
 
-        .target-title {
+        .target-title-wrap {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .target-icon {
+            color: var(--brand-primary);
+            display: flex;
+        }
+
+        .target-name {
             font-size: 13px;
             font-weight: 700;
-            color: var(--text-main);
+            color: var(--text-title);
         }
 
-        .target-badge {
-            background: var(--primary);
-            color: #fff;
-            padding: 2px 8px;
-            border-radius: 10px;
-            font-size: 11px;
+        .target-percent {
+            font-size: 12px;
             font-weight: 700;
+            color: var(--brand-primary);
+            background: rgba(99, 102, 241, 0.1);
+            padding: 2px 8px;
+            border-radius: 6px;
         }
 
-        .target-amounts {
+        .target-meta {
             display: flex;
             justify-content: space-between;
-            font-size: 13px;
-            margin-bottom: 8px;
-            color: var(--text-muted);
+            font-size: 12px;
+            color: var(--text-subtle);
+            margin-bottom: 10px;
         }
 
-        .target-amounts strong {
-            color: var(--text-main);
+        .target-meta strong {
+            color: var(--text-title);
+            font-weight: 600;
         }
 
-        .progress-bar-bg {
+        .progress-track {
             width: 100%;
-            height: 8px;
-            background: var(--border-color);
+            height: 7px;
+            background: var(--input-bg);
             border-radius: 10px;
             overflow: hidden;
         }
 
-        .progress-bar-fill {
+        .progress-fill {
             height: 100%;
-            background: var(--tabungan-gradient);
+            background: linear-gradient(90deg, var(--brand-primary), var(--accent-green));
             width: 0%;
             border-radius: 10px;
-            transition: width 0.5s ease-in-out;
+            transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        /* Form Controls */
-        .form-group {
-            margin-bottom: 16px;
+        /* Form Card */
+        .form-card {
+            background: var(--surface-card);
+            border: 1px solid var(--border-ui);
+            border-radius: var(--radius-lg);
+            padding: 20px;
+            box-shadow: var(--shadow-card);
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
         }
 
-        label {
-            display: block;
-            margin-bottom: 6px;
-            font-weight: 600;
+        /* Segmented Control (Toggle Button) */
+        .segmented-control {
+            display: flex;
+            background: var(--input-bg);
+            padding: 4px;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-ui);
+        }
+
+        .segmented-btn {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            background: transparent;
+            color: var(--text-subtle);
             font-size: 13px;
-            color: var(--text-main);
-        }
-
-        input, select {
-            width: 100%;
-            padding: 12px 14px;
-            border-radius: 12px;
-            border: 1px solid var(--border-color);
-            background-color: var(--input-bg);
-            color: var(--text-main);
-            font-size: 14px;
-            outline: none;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
             transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
         }
 
-        input:focus, select:focus {
-            border-color: var(--primary);
+        .segmented-btn.active.expense {
+            background: var(--surface-card);
+            color: var(--accent-red);
+            box-shadow: var(--shadow-subtle);
+        }
+
+        .segmented-btn.active.income {
+            background: var(--surface-card);
+            color: var(--accent-green);
+            box-shadow: var(--shadow-subtle);
+        }
+
+        /* Field Layout */
+        .field-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .field-label {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-title);
+        }
+
+        .input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 14px;
+            color: var(--text-subtle);
+            pointer-events: none;
+            display: flex;
+        }
+
+        .field-input, .field-select {
+            width: 100%;
+            padding: 12px 14px 12px 42px;
+            background: var(--input-bg);
+            border: 1px solid var(--border-ui);
+            border-radius: var(--radius-md);
+            color: var(--text-title);
+            font-size: 14px;
+            font-weight: 500;
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            appearance: none;
+        }
+
+        .field-input:focus, .field-select:focus {
+            border-color: var(--brand-primary);
             box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
         }
 
-        /* Custom Input Nominal */
-        .input-group {
-            position: relative;
-        }
-
-        .input-prefix {
+        /* Amount Field Currency Badge */
+        .currency-prefix {
             position: absolute;
             left: 14px;
-            top: 50%;
-            transform: translateY(-50%);
             font-weight: 700;
             font-size: 14px;
-            color: var(--text-muted);
+            color: var(--text-subtle);
         }
 
-        .input-group input {
-            padding-left: 42px;
+        .amount-input {
+            padding-left: 44px;
+            font-weight: 700;
+            letter-spacing: 0.2px;
         }
 
-        /* Tombol Kirim */
-        button {
+        /* Action Button */
+        .submit-btn {
             width: 100%;
             padding: 14px;
-            background: var(--primary-gradient);
+            background: var(--brand-primary);
             color: #ffffff;
             border: none;
-            border-radius: 12px;
-            cursor: pointer;
+            border-radius: var(--radius-md);
+            font-size: 14px;
             font-weight: 700;
-            font-size: 15px;
-            margin-top: 10px;
-            box-shadow: 0 6px 15px rgba(79, 70, 229, 0.25);
-            transition: transform 0.1s ease, opacity 0.2s ease;
+            cursor: pointer;
+            transition: background-color 0.2s, transform 0.1s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            box-shadow: 0 4px 12px rgba(67, 56, 202, 0.25);
+            margin-top: 4px;
         }
 
-        button:active {
+        .submit-btn:hover {
+            background: var(--brand-primary-hover);
+        }
+
+        .submit-btn:active {
             transform: scale(0.98);
-            opacity: 0.9;
         }
 
-        button:disabled {
+        .submit-btn:disabled {
             opacity: 0.6;
             cursor: not-allowed;
             transform: none;
         }
+
+        /* Toast Popup Notification */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: var(--text-title);
+            color: var(--bg-page);
+            padding: 12px 20px;
+            border-radius: 30px;
+            font-size: 13px;
+            font-weight: 600;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 9999;
+            pointer-events: none;
+            white-space: nowrap;
+        }
+
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+        }
+
+        /* Skeleton Loading Animation */
+        .skeleton {
+            background: linear-gradient(90deg, var(--border-ui) 25%, var(--input-bg) 50%, var(--border-ui) 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+            border-radius: 6px;
+            display: inline-block;
+        }
+
+        @keyframes loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <h2>Linda App</h2>
-            <p>Catatan Keuangan & Tabungan</p>
-        </div>
 
-        <!-- Card Saldo Belanja -->
-        <div class="saldo-box">
-            <h4>Saldo Utama</h4>
-            <p id="totalSaldo">Memuat saldo...</p>
-        </div>
-
-        <!-- Card Target Tabungan -->
-        <div class="target-box">
-            <div class="target-header">
-                <span class="target-title" id="namaTarget">Target Tabungan</span>
-                <span class="target-badge" id="persenTarget">0%</span>
+    <div class="app-shell">
+        <!-- Header Top Bar -->
+        <header class="app-header">
+            <div class="brand-info">
+                <h1>Linda App</h1>
+                <p>Catatan Keuangan & Tabungan</p>
             </div>
-            <div class="target-amounts">
+            <div class="status-badge">
+                <span class="status-dot"></span>
+                <span>Terhubung</span>
+            </div>
+        </header>
+
+        <!-- Dashboard Balance & Savings -->
+        <section class="dashboard-card">
+            <div class="main-balance-label">Saldo Utama</div>
+            <div class="main-balance-value" id="totalSaldo">
+                <span class="skeleton" style="width: 140px; height: 32px;"></span>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- Target Tabungan Section -->
+            <div class="target-header">
+                <div class="target-title-wrap">
+                    <span class="target-icon">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                    </span>
+                    <span class="target-name" id="namaTarget">Target Tabungan</span>
+                </div>
+                <span class="target-percent" id="persenTarget">0%</span>
+            </div>
+
+            <div class="target-meta">
                 <span>Terkumpul: <strong id="totalTabungan">Rp 0</strong></span>
                 <span id="targetNominal">/ Rp 0</span>
             </div>
-            <div class="progress-bar-bg">
-                <div id="progressFill" class="progress-bar-fill"></div>
+
+            <div class="progress-track">
+                <div id="progressFill" class="progress-fill"></div>
             </div>
-        </div>
-        
-        <div class="form-group">
-            <label>Keterangan Transaksi</label>
-            <input type="text" id="aktivitas" placeholder="Cth: Beli Makan Siang / Setor Tabungan">
-        </div>
+        </section>
 
-        <div class="form-group">
-            <label>Jenis Transaksi</label>
-            <select id="jenis">
-                <option value="Pengeluaran">Pengeluaran</option>
-                <option value="Pemasukan">Pemasukan</option>
-            </select>
-        </div>
-
-        <div class="form-group">
-            <label>Kategori</label>
-            <select id="kategori">
-                <option value="Makanan">Makanan & Minuman</option>
-                <option value="Makanan Dan Lainnya">Kebutuhan Harian</option>
-                <option value="Lainnya">Lain-lain</option>
-                <option value="Tabungan/Investasi">Tabungan / Investasi</option>
-                <option value="Gaji/Uang Masuk">Pendapatan / Gaji</option>
-            </select>
-        </div>
-
-        <div class="form-group">
-            <label>Nominal</label>
-            <div class="input-group">
-                <span class="input-prefix">Rp</span>
-                <input type="number" id="jumlah" placeholder="0" inputmode="numeric">
+        <!-- Form Record Input -->
+        <section class="form-card">
+            <!-- Toggle Pengeluaran / Pemasukan -->
+            <div class="segmented-control">
+                <button type="button" class="segmented-btn active expense" id="btnExpense" onclick="setJenis('Pengeluaran')">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m19 12-7 7-7-7M12 19V5"/></svg>
+                    Pengeluaran
+                </button>
+                <button type="button" class="segmented-btn income" id="btnIncome" onclick="setJenis('Pemasukan')">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m5 12 7-7 7 7M12 5v14"/></svg>
+                    Pemasukan
+                </button>
             </div>
-        </div>
 
-        <div class="form-group">
-            <label>Metode Pembayaran</label>
-            <select id="metode">
-                <option value="Cash">Tunai (Cash)</option>
-                <option value="Transfer">Transfer / QRIS</option>
-            </select>
-        </div>
-        
-        <button type="button" onclick="kirimData()">Simpan Transaksi</button>
+            <!-- Keterangan -->
+            <div class="field-group">
+                <label class="field-label">Keterangan Transaksi</label>
+                <div class="input-wrapper">
+                    <span class="input-icon">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+                    </span>
+                    <input type="text" id="aktivitas" class="field-input" placeholder="Cth: Makan Siang / Setor Tabungan">
+                </div>
+            </div>
+
+            <!-- Kategori -->
+            <div class="field-group">
+                <label class="field-label">Kategori</label>
+                <div class="input-wrapper">
+                    <span class="input-icon">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
+                    </span>
+                    <select id="kategori" class="field-select">
+                        <option value="Makanan">Makanan & Minuman</option>
+                        <option value="Makanan Dan Lainnya">Kebutuhan Harian</option>
+                        <option value="Lainnya">Lain-lain</option>
+                        <option value="Tabungan/Investasi">Tabungan / Investasi</option>
+                        <option value="Gaji/Uang Masuk">Pendapatan / Gaji</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Nominal -->
+            <div class="field-group">
+                <label class="field-label">Nominal Transaksi</label>
+                <div class="input-wrapper">
+                    <span class="currency-prefix">Rp</span>
+                    <input type="number" id="jumlah" class="field-input amount-input" placeholder="0" inputmode="numeric">
+                </div>
+            </div>
+
+            <!-- Metode Pembayaran -->
+            <div class="field-group">
+                <label class="field-label">Metode Pembayaran</label>
+                <div class="input-wrapper">
+                    <span class="input-icon">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+                    </span>
+                    <select id="metode" class="field-select">
+                        <option value="Cash">Tunai (Cash)</option>
+                        <option value="Transfer">Transfer / QRIS</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="button" class="submit-btn" id="btnSubmit" onclick="kirimData()">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+                <span>Simpan Transaksi</span>
+            </button>
+        </section>
     </div>
 
+    <!-- Toast Notification -->
+    <div id="toast" class="toast">Notifikasi</div>
+
     <script>
+        // Init Telegram WebApp
         let tg = window.Telegram.WebApp;
         tg.expand();
 
         let urlWebApp = "https://script.google.com/macros/s/AKfycbyEyj9QZc8IMvRXZGnMgxw-dqk0Czqnxu52R2naO1Vv-VBZEJUWOloT4tMunD7a-BeM/exec";
+        let selectedJenis = "Pengeluaran";
+
+        function showToast(message) {
+            let toast = document.getElementById("toast");
+            toast.innerText = message;
+            toast.classList.add("show");
+            setTimeout(() => {
+                toast.classList.remove("show");
+            }, 3000);
+        }
+
+        function triggerHaptic(type) {
+            if (tg && tg.HapticFeedback) {
+                if (type === 'success') tg.HapticFeedback.notificationOccurred('success');
+                else if (type === 'error') tg.HapticFeedback.notificationOccurred('error');
+                else tg.HapticFeedback.impactOccurred('light');
+            }
+        }
+
+        function setJenis(val) {
+            triggerHaptic();
+            selectedJenis = val;
+            let btnExpense = document.getElementById("btnExpense");
+            let btnIncome = document.getElementById("btnIncome");
+
+            if (val === "Pengeluaran") {
+                btnExpense.className = "segmented-btn active expense";
+                btnIncome.className = "segmented-btn";
+            } else {
+                btnIncome.className = "segmented-btn active income";
+                btnExpense.className = "segmented-btn";
+            }
+        }
 
         function formatRupiah(number) {
             return new Intl.NumberFormat('id-ID', { 
@@ -331,8 +563,6 @@
         }
 
         function muatSaldo() {
-            document.getElementById("totalSaldo").innerText = "Memuat saldo...";
-            
             fetch(urlWebApp, {
                 method: "GET",
                 redirect: "follow"
@@ -340,7 +570,7 @@
             .then(response => response.json())
             .then(data => {
                 if (data.status === "success") {
-                    document.getElementById("totalSaldo").innerText = formatRupiah(data.sisaSaldo);
+                    document.getElementById("totalSaldo").innerText = formatRupiah(data.sisaSaldo || 0);
 
                     let totalTabungan = data.totalTabungan || 0;
                     let targetTabungan = data.targetTabungan || 0;
@@ -367,19 +597,21 @@
         muatSaldo();
 
         function kirimData() {
+            triggerHaptic();
             let aktivitas = document.getElementById("aktivitas").value.trim();
-            let jenis = document.getElementById("jenis").value;
+            let jenis = selectedJenis;
             let kategori = document.getElementById("kategori").value;
             let jumlah = document.getElementById("jumlah").value.trim();
             let metode = document.getElementById("metode").value;
 
-            if (!aktivitas || !jumlah) {
-                tg.showAlert("Harap isi keterangan dan nominal transaksi dengan lengkap.");
+            if (!aktivitas || !jumlah || Number(jumlah) <= 0) {
+                triggerHaptic('error');
+                showToast("⚠️ Keterangan dan nominal harus diisi dengan benar.");
                 return;
             }
 
-            let btn = document.querySelector("button");
-            btn.innerText = "Menyimpan...";
+            let btn = document.getElementById("btnSubmit");
+            btn.innerHTML = `<span>Menyimpan...</span>`;
             btn.disabled = true;
 
             fetch(urlWebApp, {
@@ -398,20 +630,25 @@
             .then(response => response.json())
             .then(res => {
                 if (res.status === "success") {
-                    tg.showAlert("Transaksi berhasil disimpan.");
+                    triggerHaptic('success');
+                    showToast("✨ Transaksi berhasil disimpan!");
                     document.getElementById("aktivitas").value = "";
                     document.getElementById("jumlah").value = "";
                     muatSaldo();
                 } else {
-                    tg.showAlert("Gagal: " + res.message);
+                    triggerHaptic('error');
+                    showToast("❌ Gagal: " + res.message);
                 }
             })
             .catch(error => {
                 console.error("Error:", error);
-                tg.showAlert("Terjadi kesalahan sistem, silakan coba lagi.");
+                triggerHaptic('error');
+                showToast("❌ Terjadi kesalahan jaringan.");
             })
             .finally(() => {
-                btn.innerText = "Simpan Transaksi";
+                btn.innerHTML = `
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+                    <span>Simpan Transaksi</span>`;
                 btn.disabled = false;
             });
         }
